@@ -49,6 +49,8 @@ class PostController(val posts: PostClientRepository) {
 
 @Component
 class PostClientRepository {
+    
+    // a fake fun, used to call remote api and get the result.
     suspend fun findById(id: Int): QueryPostByIdResult =
         when (id) {
             1 -> QueryPostByIdResult.Success(Post(id = 1, title = "title1", content = "content1"))
