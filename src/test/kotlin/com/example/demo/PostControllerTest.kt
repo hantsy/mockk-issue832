@@ -22,12 +22,13 @@ class PostControllerTest {
 
     @Test
     fun getPostById() = runTest {
+        val postId = 1
         coEvery { postClientRepository.findById(any()) } returns
                 QueryPostByIdResult.Success(
-                    Post(id = 1, title = "title1", content = "content1")
+                    Post(id = postId, title = "title1", content = "content1")
                 )
 
-        client.get().uri("/posts/1").exchange().expectStatus().isOk
+        client.get().uri("/posts/$postId").exchange().expectStatus().isOk
 
         coVerify { postClientRepository.findById(any()) }
     }

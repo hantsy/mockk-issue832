@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity.ok
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 
 
@@ -38,8 +39,8 @@ sealed class QueryPostByIdResult : ApiBaseResult() {
 @RequestMapping("/posts")
 class PostController(val posts: PostClientRepository) {
 
-    @GetMapping("/{id}")
-    suspend fun getPostById(id: Int) : ResponseEntity<Any>{
+    @GetMapping("{id}")
+    suspend fun getPostById(@PathVariable id: Int) : ResponseEntity<Any>{
         return when(val result = posts.findById(id)) {
             is QueryPostByIdResult.Success -> ok( result.post )
             is QueryPostByIdResult.Error -> badRequest().build()
